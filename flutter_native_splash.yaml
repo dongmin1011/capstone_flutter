@@ -18,7 +18,13 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/splash/splashpng.png
+  image: assets/splash/splashiphone.png
+  #flutter pub run flutter_native_splash:remove
+  #flutter pub run flutter_native_splash:create
+  #이미지 바꾸면 꼭 실행하기
+  #아이폰 14pro width 410으로 만들기 x4 png파일
+
+  fullscreen: true
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,

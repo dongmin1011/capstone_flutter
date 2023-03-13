@@ -34,13 +34,25 @@ dependencies:
   camera: ^0.10.0+5
   path_provider: ^2.0.11
   path: ^1.8.2
-  image_picker: ^0.8.6
+  image_picker: ^0.8.5
   cupertino_icons: ^1.0.2
   fluttertoast: ^8.0.9
   flutter_native_splash: ^2.2.16
   lottie: ^2.1.0
   video_player: ^2.4.10
-
+  location: ^4.2.0
+  modal_bottom_sheet: ^2.1.2
+  page_transition: "^2.0.9"
+  transition: ^2.0.2
+  http: ^0.13.5
+  dio: ^4.0.6
+  get: ^4.6.5
+  flutter_spinkit: ^5.1.0
+  smooth_page_indicator: ^1.0.0+2
+  hidden_drawer_menu: ^3.0.1
+  simple_animations: ^5.0.0+3
+  rive: ^0.10.1
+  flutter_secure_storage: ^8.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -78,6 +90,8 @@ flutter:
    # - assets/loiite/programmer.json
     - assets/lottie/
     - assets/splash/
+    - assets/background/
+    - assets/riv/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -95,6 +109,8 @@ flutter:
       fonts:
         - asset: assets/TmoneyRoundWindExtraBold.ttf
           weight: 700
+        - asset: assets/TmoneyRoundWindRegular.ttf
+        
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
