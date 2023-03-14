@@ -54,6 +54,7 @@ class _StoreInfoState extends State<StoreInfo> {
       // 스크롤이 끝까지 도달했을 때 추가 아이템 로드
       setState(() {
         count += 10;
+        print("add");
       });
     }
   }
