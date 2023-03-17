@@ -83,7 +83,7 @@ class _StoreInfoState extends State<StoreInfo> {
         extendBodyBehindAppBar: true,
         // appBar: appbarObject(""),
         body: Container(
-          // color: Colors.amber,
+          color: Colors.grey[200],
           child: CustomScrollView(
             physics:
                 BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -120,8 +120,8 @@ class _StoreInfoState extends State<StoreInfo> {
                 ),
                 shape: ContinuousRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(90),
-                    bottomRight: Radius.circular(90),
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
                   ),
                 ),
                 pinned: true,
@@ -183,6 +183,7 @@ class _StoreInfoState extends State<StoreInfo> {
                         width: width * 0.8,
                         height: height * 0.7,
                         decoration: BoxDecoration(
+                            color: Colors.white,
                             border: Border.all(),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50))),
@@ -272,7 +273,7 @@ class _StoreInfoState extends State<StoreInfo> {
                                           },
                                         ),
                                         Divider(
-                                          color: Colors.black38,
+                                          color: Colors.black,
                                           height: 5,
                                         ),
                                       ],

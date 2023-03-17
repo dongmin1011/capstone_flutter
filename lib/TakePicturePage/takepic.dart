@@ -235,9 +235,9 @@ class _GetImageState extends State<takepic>
                         //    postHTTP();
                         // dynamic sendData;
                         if (_image != null) {
-                          postUserProfileImage(_image!.path);
-                          // Get.to(() => StoreInfo(response: "hi"),
-                          //     transition: Transition.upToDown);
+                          // postUserProfileImage(_image!.path);
+                          Get.to(() => StoreInfo(response: "hi"),
+                              transition: Transition.upToDown);
                         }
                         // var formData = dio.FormData.fromMap({
                         //   'image': await dio.MultipartFile.fromFile(sendData)
@@ -368,14 +368,14 @@ class _GetImageState extends State<takepic>
     try {
       upload.options.contentType = 'multipart/form-data';
       upload.options.maxRedirects.isFinite;
-      print(1);
+      // print(1);
 
       // dio.options.headers = {'token': token};
       var response = await upload.post(
-        "http://118.34.54.132:8080/basic/image",
+        "http://118.34.54.132:8080/upload/picture",
         data: formData,
       );
-      print(2);
+      // print(2);
       if (response.statusCode == 200) {
         print('성공적으로 업로드했습니다');
         IsLoadingController.to.isLoading = false;
@@ -383,7 +383,8 @@ class _GetImageState extends State<takepic>
         //     context,
         //     MaterialPageRoute(
         //         builder: (context) => StoreInfo(response: response.data)));
-        Get.to(() => StoreInfo(response: response.data));
+        Get.to(() => StoreInfo(response: response.data),
+            transition: Transition.upToDown);
         print(response.data);
         return response.data;
       } else {
