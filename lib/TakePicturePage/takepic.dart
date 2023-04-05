@@ -235,9 +235,9 @@ class _GetImageState extends State<takepic>
                         //    postHTTP();
                         // dynamic sendData;
                         if (_image != null) {
-                          // postUserProfileImage(_image!.path);
-                          Get.to(() => StoreInfo(response: "hi"),
-                              transition: Transition.upToDown);
+                          postUserProfileImage(_image!.path);
+                          // Get.to(() => StoreInfo(response: "hi"),
+                          //     transition: Transition.upToDown);
                         }
                         // var formData = dio.FormData.fromMap({
                         //   'image': await dio.MultipartFile.fromFile(sendData)

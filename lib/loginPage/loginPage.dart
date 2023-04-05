@@ -5,13 +5,19 @@ import 'dart:convert';
 import 'package:capstone1/BasicObject.dart';
 import 'package:capstone1/TakePicturePage/takepic.dart';
 import 'package:capstone1/first_page/MainPage.dart';
+import 'package:capstone1/loginPage/Model.dart';
 import 'package:capstone1/loginPage/signUpPage.dart';
+import 'package:capstone1/loginPage/social_login.dart';
 import 'package:capstone1/side_menu.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:get/get.dart';
+
 import 'package:rive/rive.dart';
+import 'package:uuid/uuid.dart';
 
 import '../first_page/first_page.dart';
 import '../user/UserInfo.dart';
@@ -31,6 +37,32 @@ class _loginPageState extends State<loginPage> {
   bool isLoading = false;
   bool isShowConfetti = false;
 
+  // Future<UserCredential> signInWithKakao() async {
+
+  //   final clientState = Uuid().v4();
+
+  //   final url = Uri.https('kauth.kakao.com', '/oauth/authorize', {
+
+  //     'response_type': 'code',
+
+  //     'client_id': '이곳은 카카오에서 설정한 REST API KEY를 넣어준다.',
+
+  //     'redirect_uri': 'http://192.168.158.217:8080/kakao/sign_in',
+
+  //     'state': clientState,
+
+  //   });
+
+  //   final result = await FlutterWebAuth.authenticate(
+
+  //       url: url.toString(), callbackUrlScheme: "webauthcallback");
+
+  //   final body = Uri.parse(result).queryParameters;
+
+  //   print(body);
+
+  // }
+
   var loginId = TextEditingController(); // id 입력 저장
   var password = TextEditingController(); // pw 입력 저장
 
@@ -43,12 +75,12 @@ class _loginPageState extends State<loginPage> {
 
   final formKey = GlobalKey<FormState>();
   // User user = new User();
-  late User user;
+  // late User user;
 
   static final storage = FlutterSecureStorage();
-  User? currentUser;
+  // User? currentUser;
   dynamic userInfo = '';
-
+  final viewModel = ViewModel(KakaoLogin());
   // @override
   // void initState() {
   //   // TODO: implement initState
@@ -260,7 +292,7 @@ Future<String> getJWTToken(String id, String password) async {
                                         'password': password.text
                                       });
                                       var response = await dio.post(
-                                        'http://211.105.160.61:8080/session/login',
+                                        'http://118.34.54.132:8080/session/login',
                                         data: param,
                                         options: Options(
                                           headers: {
@@ -412,7 +444,13 @@ Future<String> getJWTToken(String id, String password) async {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () async {
+                                print("카카오 로그인");
+                                await viewModel.login();
+                                setState(() {
+                                  // Get.back();
+                                });
+                              },
                               child:
                                   Image.asset("assets/splash/kakao_login.png"),
                             ),

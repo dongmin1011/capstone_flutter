@@ -183,7 +183,7 @@ class SignupPage extends StatelessWidget {
                           };
                           print(param);
                           var response = await dio.post(
-                              'http://211.105.160.61:8080/basic/signup',
+                              'http://118.34.54.132:8080/signup',
                               data: param);
 
                           if (response.statusCode == 200) {

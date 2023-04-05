@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/services.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+
+// import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +19,8 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  // KakaoSdk.init(nativeAppKey: '4729c96c97b19ccdd163431cfa729d45');
+  KakaoSdk.init(nativeAppKey: '4729c96c97b19ccdd163431cfa729d45');
   runApp(const MyApp());
 }
 
