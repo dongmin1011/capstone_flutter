@@ -6,6 +6,7 @@ import 'package:capstone1/first_page/MainPage.dart';
 import 'package:capstone1/rivAsset/RiveAsset.dart';
 import 'package:capstone1/rivAsset/RiveUtils.dart';
 import 'package:capstone1/side_menu.dart';
+import 'package:capstone1/sideview/sideview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -60,7 +61,7 @@ class _MyPageState extends State<FirstPage>
       extendBodyBehindAppBar: true,
       backgroundColor: Color(0xff235883),
       appBar: appbarObject(""),
-      drawer: SideView(context),
+      drawer: SideView(),
       // PageView(
       //       controller: PageController(
       //         initialPage: 1, //시작 페이지
@@ -124,7 +125,10 @@ class _MyPageState extends State<FirstPage>
       //         MainPage(width: width, height: height)
       //       ],
       //     ),
-      body: MainPage(width: width, height: height),
+      body: MainPage(
+        width: width,
+        height: height,
+      ),
 
       // body: Stack(
       //   children: [

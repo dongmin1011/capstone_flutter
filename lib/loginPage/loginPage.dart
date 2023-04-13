@@ -4,10 +4,12 @@ import 'dart:convert';
 
 import 'package:capstone1/BasicObject.dart';
 import 'package:capstone1/TakePicturePage/takepic.dart';
+import 'package:capstone1/Token/token.dart';
 import 'package:capstone1/first_page/MainPage.dart';
 import 'package:capstone1/loginPage/Model.dart';
 import 'package:capstone1/loginPage/signUpPage.dart';
 import 'package:capstone1/loginPage/social_login.dart';
+import 'package:capstone1/main.dart';
 import 'package:capstone1/side_menu.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -37,32 +39,6 @@ class _loginPageState extends State<loginPage> {
   bool isLoading = false;
   bool isShowConfetti = false;
 
-  // Future<UserCredential> signInWithKakao() async {
-
-  //   final clientState = Uuid().v4();
-
-  //   final url = Uri.https('kauth.kakao.com', '/oauth/authorize', {
-
-  //     'response_type': 'code',
-
-  //     'client_id': '이곳은 카카오에서 설정한 REST API KEY를 넣어준다.',
-
-  //     'redirect_uri': 'http://192.168.158.217:8080/kakao/sign_in',
-
-  //     'state': clientState,
-
-  //   });
-
-  //   final result = await FlutterWebAuth.authenticate(
-
-  //       url: url.toString(), callbackUrlScheme: "webauthcallback");
-
-  //   final body = Uri.parse(result).queryParameters;
-
-  //   print(body);
-
-  // }
-
   var loginId = TextEditingController(); // id 입력 저장
   var password = TextEditingController(); // pw 입력 저장
 
@@ -81,86 +57,24 @@ class _loginPageState extends State<loginPage> {
   // User? currentUser;
   dynamic userInfo = '';
   final viewModel = ViewModel(KakaoLogin());
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     _asyncMethod();
-  //   });
-  // }
-  // 현재 로그인한 사용자 정보를 저장할 변수
 
-/*
-// 로그인 함수
-Future<bool> login(String id, String password) async {
-  // 로그인 성공 여부를 서버에서 받아옴
-  final isLoggedIn = await getJWTToken(id, password);
-  if (isLoggedIn) {
-    // 로그인 정보를 디바이스에 저장
-    await storage.write(key: keyIsLoggedIn, value: 'true');
-    await storage.write(key: 'id', value: currentUser!.loginId);
-    await storage.write(key: 'password', value: currentUser!.password);
-    await storage.write(key: 'nickname', value: currentUser!.nickname);
-    return true;
-  }
-  return false;
-}
-
-// 로그아웃 함수
-Future<void> logout() async {
-  // 저장된 로그인 정보를 모두 삭제
-  await storage.delete(key: jwtToken);
-  await storage.delete(key: 'loginId');
-  await storage.delete(key: 'username');
-  await storage.delete(key: 'nickname');
-  currentUser = null;
-}
-Future<String> getJWTToken(String id, String password) async {
-  try {
-    var response = await Dio().post(
-      'http://your-api-url.com/login',
-      data: jsonEncode(<String, String>{
-        'loginId': id,
-        'password': password,
-      }),
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      ),
-    );
-    if (response.statusCode == 200) {
-      var jwtToken = response.data['token'];
-      var userJson = response.data['user'];
-      var user = User.fromJson(userJson);
-      await storage.write(key: 'jwtToken', value: jwtToken);
-      return jwtToken;
-    } else {
-      throw Exception('Failed to get JWT token');
-    }
-  } catch (e) {
-    throw Exception('Failed to get JWT token');
-  }
-}
-*/
   final MyController myController = Get.put(MyController());
 
-  _asyncMethod() async {
-    // read 함수로 key값에 맞는 정보를 불러오고 데이터타입은 String 타입
-    // 데이터가 없을때는 null을 반환
-    userInfo = await storage.read(key: 'jwtToken');
+  // _asyncMethod() async {
+  //   // read 함수로 key값에 맞는 정보를 불러오고 데이터타입은 String 타입
+  //   // 데이터가 없을때는 null을 반환
+  //   userInfo = await storage.read(key: 'jwtToken');
 
-    // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어가게 합니다.
-    if (userInfo != null) {
-      print("로그인 성공");
+  //   // user의 정보가 있다면 로그인 후 들어가는 첫 페이지로 넘어가게 합니다.
+  //   if (userInfo != null) {
+  //     print("로그인 성공");
 
-      // Get.to(takepic());
-      // Navigator.pushNamed(context, '/main');
-    } else {
-      print('로그인이 필요합니다');
-    }
-  }
+  //     // Get.to(takepic());
+  //     // Navigator.pushNamed(context, '/main');
+  //   } else {
+  //     print('로그인이 필요합니다');
+  //   }
+  // }
 
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
@@ -193,7 +107,7 @@ Future<String> getJWTToken(String id, String password) async {
                 TextObject("로그인", Colors.black, 30, FontWeight.bold),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: TextObject("로그인하여 댓글과 후기를 남겨주세요!\n", Colors.black, 12,
+                  child: TextObject("로그인하여 댓글과 후기를 남겨주세요!\n", Colors.black, 15,
                       FontWeight.bold,
                       center: false),
                 ),
@@ -292,7 +206,7 @@ Future<String> getJWTToken(String id, String password) async {
                                         'password': password.text
                                       });
                                       var response = await dio.post(
-                                        'http://118.34.54.132:8080/session/login',
+                                        'http://118.34.54.132:8080/token/login',
                                         data: param,
                                         options: Options(
                                           headers: {
@@ -309,6 +223,16 @@ Future<String> getJWTToken(String id, String password) async {
                                         // var userJson = response.data['user'];
                                         print(
                                             "data" + response.data.toString());
+
+                                        // print(test!.values);
+                                        final MainPageController _myController =
+                                            Get.find<MainPageController>();
+
+                                        // print(
+                                        //     json.decode(source) + "12121212121212");
+                                        // MyApp.storage.write(
+                                        //     key: "token", value: response.data);
+                                        // print(MyApp.storage.read(key: "token"));
                                         // print(jwtToken);
                                         // user = User.fromJson(userJson);
 
@@ -329,14 +253,19 @@ Future<String> getJWTToken(String id, String password) async {
                                             confetti.fire();
                                             Future.delayed(Duration(seconds: 1),
                                                 () {
+                                              _myController.onLoginSuccess(
+                                                  response.data);
                                               Get.back();
+
+                                              // print(_myController
+                                              //     .isLoggedIn.value);
                                               // MainPage.isActive.value = true;
                                               // Get.offAll(FirstPage());
                                               // _asyncMethod();
                                             });
                                           });
                                         });
-                                        print(response.data);
+                                        // print(response.data);
                                       } else {
                                         print("err");
                                         Future.delayed(Duration(seconds: 1),
@@ -449,6 +378,21 @@ Future<String> getJWTToken(String id, String password) async {
                                 await viewModel.login();
                                 setState(() {
                                   // Get.back();
+                                  if (viewModel.isLogined) {
+                                    Get.back();
+                                    // Get.offAll(FirstPage());
+                                    // print(viewModel.isLogined);
+                                    // Future.delayed()
+
+                                    setState(() {
+                                      // Get.to(FirstPage());
+                                      // Get.offAll(FirstPage());
+                                      // print("끼요옹오오오오옷" +
+                                      //     MyApp.storage
+                                      //         .read(key: 'token')
+                                      //         .toString());
+                                    });
+                                  }
                                 });
                               },
                               child:

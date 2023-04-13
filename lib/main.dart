@@ -6,6 +6,7 @@ import 'package:capstone1/intro_screens/OnBoardingScreen.dart';
 import 'package:capstone1/rivAsset/RiveAsset.dart';
 import 'package:capstone1/side_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/services.dart';
@@ -19,6 +20,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   // KakaoSdk.init(nativeAppKey: '4729c96c97b19ccdd163431cfa729d45');
   KakaoSdk.init(nativeAppKey: '4729c96c97b19ccdd163431cfa729d45');
   runApp(const MyApp());
@@ -26,7 +28,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  static final storage = FlutterSecureStorage();
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

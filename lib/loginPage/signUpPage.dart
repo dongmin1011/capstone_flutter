@@ -71,8 +71,8 @@ class SignupPage extends StatelessWidget {
                                             return "id는 필수입니다.";
                                           }
                                           if (!(value!.length > 3 &&
-                                              value!.length < 10)) {
-                                            return "id는 3자 이상 10자 미만으로 입력";
+                                              value!.length < 9)) {
+                                            return "id는 4자 이상 9자 미만으로 입력";
                                           }
                                         },
                                         decoration: InputDecoration(
@@ -113,8 +113,8 @@ class SignupPage extends StatelessWidget {
                                       return "비밀번호는 필수입니다.";
                                     }
                                     if (!(value!.length > 3 &&
-                                        value!.length < 10)) {
-                                      return "비밀번호는 3자 이상 10자 미만으로 입력해주세요";
+                                        value!.length < 9)) {
+                                      return "비밀번호는 4자 이상 9자 미만으로 입력해주세요";
                                     }
                                   },
                                   decoration: InputDecoration(
@@ -149,6 +149,10 @@ class SignupPage extends StatelessWidget {
                                       return "이름은 필수입니다.";
                                     }
                                     // return "중복된 닉네임입니다.";
+                                    if (!(value!.length >= 2 &&
+                                        value!.length < 8)) {
+                                      return "닉네임은 2자 이상 7자 미만으로 입력해주세요";
+                                    }
                                   },
                                   decoration: const InputDecoration(
                                     filled: true,
@@ -179,7 +183,7 @@ class SignupPage extends StatelessWidget {
                           var param = {
                             'loginId': id.text,
                             'password': password.text,
-                            'nickname': nickname.text
+                            'name': nickname.text
                           };
                           print(param);
                           var response = await dio.post(

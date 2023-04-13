@@ -69,107 +69,7 @@ Widget title(String title, double width, double height) {
   );
 }
 
-Drawer SideView(BuildContext context) {
-  return Drawer(
-    child: ListView(padding: EdgeInsets.zero, children: <Widget>[
-      UserAccountsDrawerHeader(
-        currentAccountPicture: GestureDetector(
-          onTap: () {
-            openLoginPage(context);
-          },
-          child: CircleAvatar(
-            backgroundImage:
-                AssetImage('assets/user.png'), //이미지 삽입할때 pubspec에셋확인하기
-            backgroundColor: Colors.white,
-          ),
-        ),
-        accountName: Text("이름"),
-        accountEmail: Text('이메일'),
-        onDetailsPressed: () {
-          print('arrow is clicked');
-        },
-        decoration: BoxDecoration(
-            color: Colors.red[200],
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(40.0),
-                bottomRight: Radius.circular(40.0))),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(left: 16, top: 20, bottom: 10),
-        child: Text(
-          "메뉴 목록",
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(color: Colors.black54),
-        ),
-      ),
-      const Padding(
-        padding: EdgeInsets.only(left: 10, right: 10),
-        child: Divider(
-          color: Colors.black54,
-          height: 1,
-        ),
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.home,
-          color: Colors.grey[850],
-        ),
-        title: TextObject("Home", Colors.black, 15, FontWeight.w300,
-            center: false),
-        onTap: () {
-          print('home is clicked');
-          // Navigator.of(context).pop();
-          // Get.back();
-          Get.offAll(() => FirstPage());
-        },
-        trailing: Icon(Icons.add),
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.camera,
-          color: Colors.grey[850],
-        ),
-        title: TextObject("Take a Picture", Colors.black, 15, FontWeight.w300,
-            center: false),
-        onTap: () {
-          Get.back();
-          Get.to(() => takepic());
-          print('Picture is clicked');
-        },
-        trailing: Icon(Icons.add),
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.people,
-          color: Colors.grey[850],
-        ),
-        title: TextObject("커뮤니티", Colors.black, 15, FontWeight.w300,
-            center: false),
-        onTap: () {
-          Get.back();
-          Get.to(() => CommunityPage(response: "test"));
-          print('community is clicked');
-        },
-        trailing: Icon(Icons.add),
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.question_answer,
-          color: Colors.grey[850],
-        ),
-        title: Text('Q&A'),
-        onTap: () {
-          print('Q&A is clicked');
-        },
-        trailing: Icon(Icons.add),
-      ),
-    ]),
-  );
-}
-
-Future<Null> openLoginPage(BuildContext context) {
+Future<Null> openSimplePage(BuildContext context, Widget page) {
   return Future.delayed(Duration(microseconds: 1000), () {
     showGeneralDialog(
         barrierDismissible: true,
@@ -185,6 +85,6 @@ Future<Null> openLoginPage(BuildContext context) {
           );
         }),
         context: context,
-        pageBuilder: ((context, _, __) => loginPage()));
+        pageBuilder: ((context, _, __) => page));
   });
 }

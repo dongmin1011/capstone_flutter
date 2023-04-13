@@ -14,7 +14,6 @@ class ViewModel {
     print(isLogined);
     if (isLogined) {
       user = await UserApi.instance.me();
-      Get.back();
     }
   }
 

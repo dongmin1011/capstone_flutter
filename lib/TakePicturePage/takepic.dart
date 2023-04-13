@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:camera/camera.dart';
 import 'package:capstone1/TakePicturePage/ImageWidget.dart';
 import 'package:capstone1/StoreInfo.dart';
+import 'package:capstone1/sideview/sideview.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -79,7 +80,7 @@ class _GetImageState extends State<takepic>
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.grey[200],
       appBar: appbarObject(""),
-      drawer: SideView(context),
+      drawer: SideView(),
       body: Container(
         child: Stack(children: [
           // backgroundImage(width, height),

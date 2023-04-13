@@ -1,4 +1,5 @@
 import 'package:capstone1/BasicObject.dart';
+import 'package:capstone1/sideview/sideview.dart';
 import 'package:dio/src/response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -26,7 +27,7 @@ class _CommunityPageState extends State<CommunityPage> {
         extendBodyBehindAppBar: true,
         // backgroundColor: Color(0xff235883),
         appBar: appbarObject(""),
-        drawer: SideView(context),
+        drawer: SideView(),
         body: Container(
           color: Colors.grey[200],
           child: Center(
