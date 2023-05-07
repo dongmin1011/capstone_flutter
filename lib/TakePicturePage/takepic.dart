@@ -362,13 +362,26 @@ class _GetImageState extends State<takepic>
 
   Future<dynamic> postUserProfileImage(dynamic input) async {
     print("사진을 서버에 업로드 합니다.");
-    var upload = new dio.Dio();
+    var upload = new dio.Dio(dio.BaseOptions(
+        // connectTimeout: 12000, // milliseconds
+        // receiveTimeout: 12000, // milliseconds
+        // headers: {
+        //   'Connection': 'Keep-Alive',
+        // },
+        ));
+
+    // dio.CancelToken cancelToken = dio.CancelToken();
     var formData = dio.FormData.fromMap(
         {'image': await dio.MultipartFile.fromFile(input)});
     IsLoadingController.to.isLoading = true;
+
     try {
       upload.options.contentType = 'multipart/form-data';
       upload.options.maxRedirects.isFinite;
+      // upload.options.headers['Connection'] = 'Keep-Alive';
+      // upload.options.receiveTimeout = 30000;
+      // upload.options.connectTimeout = 30000;
+      // upload.options.KeepAlive = true;
       // print(1);
 
       // dio.options.headers = {'token': token};
@@ -384,9 +397,15 @@ class _GetImageState extends State<takepic>
         //     context,
         //     MaterialPageRoute(
         //         builder: (context) => StoreInfo(response: response.data)));
-        Get.to(() => StoreInfo(response: response.data),
+        // print(response.data);
+        // Map<String, dynamic> jsonMap = response.data;
+        // print(jsonMap['image']);
+        // print("image" + response.data['image']);
+        // cancelToken.cancel();
+        Get.to(() => StoreInfo(image: response.data),
             transition: Transition.upToDown);
-        print(response.data);
+        print(response.headers);
+        print(response.data['names']);
         return response.data;
       } else {
         print("err");

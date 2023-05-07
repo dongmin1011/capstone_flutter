@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:capstone1/BasicObject.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,10 +12,10 @@ import 'package:dio/dio.dart' as dio;
 import 'LoadingWidget.dart';
 
 class StoreInfo extends StatefulWidget {
-  const StoreInfo({Key? key, required this.response}) : super(key: key);
+  const StoreInfo({Key? key, required this.image}) : super(key: key);
 
   // final dynamic sendData;
-  final String response;
+  final Map<String, dynamic> image;
 
   @override
   State<StoreInfo> createState() => _StoreInfoState();
@@ -26,9 +29,6 @@ class _StoreInfoState extends State<StoreInfo> {
   // }
   final _searchList = ['네이버', '에브리타임', '세 번째'];
   String _searchValue = "네이버";
-
-  final storeList = ['첫 번째 가게', '두 번째 가게', '세 번째 가게'];
-  String _storeValue = "첫 번째 가게";
 
   String comment = "네이버";
 
@@ -61,6 +61,8 @@ class _StoreInfoState extends State<StoreInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final storeList = widget.image['names'];
+    String _storeValue = storeList[0];
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     // print(widget.sendData);
@@ -91,7 +93,33 @@ class _StoreInfoState extends State<StoreInfo> {
               SliverAppBar(
                 // title: IconButton(onPressed: () {}, icon: Icon(Icons.clear)),
                 toolbarHeight: 70,
-
+                title: Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white54,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: DropdownButton<String>(
+                      dropdownColor: Colors.white,
+                      value: _storeValue,
+                      items: storeList.map<DropdownMenuItem<String>>(
+                        (value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        },
+                      ).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _storeValue = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(20),
                   child: Container(
@@ -134,10 +162,10 @@ class _StoreInfoState extends State<StoreInfo> {
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30),
                     ),
-                    // image: DecorationImage(
-                    //   image: AssetImage('assets/background/backgroundtest.jpg'),
-                    //   fit: BoxFit.cover,
-                    // ),
+                    image: DecorationImage(
+                      image: MemoryImage(base64Decode(widget.image['image'])),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 )),
               ),
@@ -155,32 +183,11 @@ class _StoreInfoState extends State<StoreInfo> {
                     //         border: Border.all(color: Colors.black)),
                     //   ),
                     // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("인식된 가게 목록"),
-                        DropdownButton(
-                          value: _storeValue,
-                          items: storeList.map<DropdownMenuItem<String>>(
-                            (value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (String? value) {
-                            setState(() {
-                              _storeValue = value!;
-                            });
-                          },
-                        )
-                      ],
-                    ),
+
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Container(
-                        width: width * 0.8,
+                        width: width * 0.95,
                         height: height * 0.7,
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -213,6 +220,38 @@ class _StoreInfoState extends State<StoreInfo> {
                                         ).toList(),
                                         onChanged: (String? value) {
                                           setState(() {
+                                            // var upload = new dio.Dio();
+                                            // var Data = jsonEncode(
+                                            //     <String, String>{"검색": "돼김"});
+                                            // print(Data);
+                                            // try {
+                                            //   // dio.options.headers = {'token': token};
+                                            //   var response = await upload.post(
+                                            //     "http://121.185.122.19:5000/test",
+                                            //     data: Data,
+                                            //     options: Options(
+                                            //       headers: {
+                                            //         'Content-Type':
+                                            //             'application/json; charset=UTF-8',
+                                            //       },
+                                            //       responseType: ResponseType
+                                            //           .json, // JSON 형태의 데이터를 응답으로 받음
+                                            //     ),
+                                            //   );
+                                            //   print(response);
+                                            //   // print(2);
+                                            //   if (response.statusCode == 200) {
+                                            //     print(123);
+                                            //     print(response.data);
+                                            //     return response.data;
+                                            //   } else {
+                                            //     print("err");
+                                            //   }
+                                            // } catch (e) {
+                                            //   print("catch err");
+                                            //   print(e);
+                                            // }
+
                                             _searchValue = value!;
                                             comment = _searchValue;
                                           });
