@@ -18,6 +18,7 @@ Future<Map<String, dynamic>?> getToken() async {
   if (jsonString == '') {
     return null;
   }
+  // return null;
   Map<String, dynamic> jsonData = jsonDecode(jsonString);
   print(jsonData);
   return jsonData;

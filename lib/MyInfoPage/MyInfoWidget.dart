@@ -337,7 +337,7 @@ class ChangeInfoWidget extends StatelessWidget {
                                 };
                                 print(param);
                                 var response = await dio.post(
-                                    'http://118.34.54.132:8080/token/update',
+                                    'http://118.34.54.132:8081/user/update',
                                     data: param);
 
                                 if (response.statusCode == 200) {

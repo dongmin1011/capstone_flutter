@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:capstone1/main.dart';
@@ -359,6 +360,31 @@ class _GetImageState extends State<takepic>
   //     print("err");
   //   }
   // }
+  // 이미지 자르기
+  void CropImage(dynamic file) async {
+    final imageCropper = ImageCropper();
+
+    if (file != null) {
+      final croppedFile = await imageCropper.cropImage(
+        sourcePath: file!.path,
+        maxWidth: 640,
+        maxHeight: 640,
+        // compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 90,
+      );
+
+      if (croppedFile != null) {
+        // 압축 및 크롭된 이미지 파일 반환
+        postUserProfileImage(file!.path);
+      } else {
+        // 크롭된 파일이 없을 경우 예외 처리
+        throw Exception('이미지 크롭에 실패했습니다.');
+      }
+    } else {
+      // 이미지가 선택되지 않았을 경우 예외 처리
+      throw Exception('이미지 선택이 취소되었습니다.');
+    }
+  }
 
   Future<dynamic> postUserProfileImage(dynamic input) async {
     print("사진을 서버에 업로드 합니다.");
@@ -378,16 +404,18 @@ class _GetImageState extends State<takepic>
     try {
       upload.options.contentType = 'multipart/form-data';
       upload.options.maxRedirects.isFinite;
-      // upload.options.headers['Connection'] = 'Keep-Alive';
-      // upload.options.receiveTimeout = 30000;
-      // upload.options.connectTimeout = 30000;
+      upload.options.headers['Connection'] = 'Keep-Alive';
+      // upload.options.receiveTimeout = 10000;
+      // upload.options.connectTimeout = 10000;
       // upload.options.KeepAlive = true;
       // print(1);
 
       // dio.options.headers = {'token': token};
+      // final Uri url = Uri.parse("http://118.34.54.132:8081/upload/picture");
       var response = await upload.post(
-        "http://118.34.54.132:8080/upload/picture",
+        "http://118.34.54.132:8081/upload/picture",
         data: formData,
+        // options: dio.Options(headers: {'Connection': 'keep-alive'}),
       );
       // print(2);
       if (response.statusCode == 200) {
@@ -402,8 +430,16 @@ class _GetImageState extends State<takepic>
         // print(jsonMap['image']);
         // print("image" + response.data['image']);
         // cancelToken.cancel();
-        Get.to(() => StoreInfo(image: response.data),
-            transition: Transition.upToDown);
+        if (response.data['image'] == "error") {
+          Fluttertoast.showToast(
+              msg: '인식된 가게가 없습니다.', //$curlacation',
+              gravity: ToastGravity.CENTER,
+              toastLength: Toast.LENGTH_SHORT);
+        } else {
+          Get.to(() => StoreInfo(image: response.data),
+              transition: Transition.upToDown);
+        }
+        // upload.close();
         print(response.headers);
         print(response.data['names']);
         return response.data;

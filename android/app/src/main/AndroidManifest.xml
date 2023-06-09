@@ -14,6 +14,7 @@
          <activity 
         android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity"
         android:exported="true">
+        
         <intent-filter android:label="flutter_web_auth">
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
@@ -24,6 +25,12 @@
             <data android:scheme="kakao4729c96c97b19ccdd163431cfa729d45" android:host="oauth"/>
         </intent-filter>
     </activity>
+    <!-- 이미지 crop할때 사용 바꿀거면 삭제하셈 -->
+    <activity
+        android:name="com.yalantis.ucrop.UCropActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> 
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

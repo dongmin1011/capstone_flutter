@@ -31,10 +31,6 @@ class loginPage extends StatefulWidget {
   State<loginPage> createState() => _loginPageState();
 }
 
-class MyController extends GetxController {
-  RxBool isActive = false.obs;
-}
-
 class _loginPageState extends State<loginPage> {
   bool isLoading = false;
   bool isShowConfetti = false;
@@ -58,7 +54,7 @@ class _loginPageState extends State<loginPage> {
   dynamic userInfo = '';
   final viewModel = ViewModel(KakaoLogin());
 
-  final MyController myController = Get.put(MyController());
+  // final MyController myController = Get.put(MyController());
 
   // _asyncMethod() async {
   //   // read 함수로 key값에 맞는 정보를 불러오고 데이터타입은 String 타입
@@ -206,7 +202,7 @@ class _loginPageState extends State<loginPage> {
                                         'password': password.text
                                       });
                                       var response = await dio.post(
-                                        'http://118.34.54.132:8080/token/login',
+                                        'http://118.34.54.132:8081/user/login',
                                         data: param,
                                         options: Options(
                                           headers: {
@@ -217,7 +213,7 @@ class _loginPageState extends State<loginPage> {
                                               .json, // JSON 형태의 데이터를 응답으로 받음
                                         ),
                                       );
-
+                                      // print(response.data);
                                       if (response.statusCode == 200) {
                                         // var jwtToken = response.data['token'];
                                         // var userJson = response.data['user'];

@@ -152,7 +152,7 @@ class _MainPageState extends State<MainPage> {
                             return userNotLogin(context);
                           }
                         }),
-
+                    // userNotLogin(context),
                     SizedBox(
                       height: 30,
                     ),
@@ -655,31 +655,87 @@ class _MainPageInfoState extends State<MainPageInfo> {
             // alignment: Alignment.topLeft,
             child: (index == 1)
                 ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         TextObject(
-                          "",
-                          Colors.black,
-                          20,
+                          "애플리케이션 설명",
+                          Colors.black87,
+                          25,
                           FontWeight.bold,
                         ),
-                        // TextObject(
-                        //     "원하는 가게를 찾는다!", Colors.black, 20, FontWeight.bold,
-                        //     center: false)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: TextObject(
+                            "1. 휴대폰 카메라를 꺼낸다",
+                            Colors.black87,
+                            20,
+                            FontWeight.bold,
+                          ),
+                        ),
+                        Center(
+                            child: Lottie.asset("assets/lottie/getPhone.json",
+                                width: 200))
+                        // Container(
+                        //     height: 300,
+                        //     decoration: BoxDecoration(
+                        //       border: Border.all(),
+                        //       image: DecorationImage(
+                        //         image: AssetImage(
+                        //             "assets/background/explain1.jpg"),
+                        //         fit: BoxFit.cover,
+                        //       ),
+                        //     ))
                       ])
                 : index == 2
                     ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                             TextObject(
-                                "안녕 두번째페이지", Colors.red, 20, FontWeight.bold)
+                              "애플리케이션 설명",
+                              Colors.black87,
+                              25,
+                              FontWeight.bold,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: TextObject("2. 찾고싶은 가게의 사진을 찍는다",
+                                  Colors.black87, 20, FontWeight.bold,
+                                  center: false),
+                            ),
+                            SizedBox(
+                              height: 250,
+                              child: SingleChildScrollView(
+                                physics: NeverScrollableScrollPhysics(),
+                                child: Lottie.asset(
+                                  "assets/lottie/takeapic.json",
+                                ),
+                              ),
+                            )
                           ])
                     : index == 3
                         ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                TextObject("안녕 세번째페이지", Colors.green, 20,
-                                    FontWeight.bold)
+                                TextObject(
+                                  "애플리케이션 설명",
+                                  Colors.black87,
+                                  25,
+                                  FontWeight.bold,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: TextObject("3. 가게의 정보를 확인하고 맛있게 먹는다",
+                                      Colors.black87, 20, FontWeight.bold,
+                                      center: false),
+                                ),
+                                Lottie.asset("assets/lottie/infomation.json",
+                                    width: 170),
+                                TextObject(
+                                  "후기도 남겨주세요!",
+                                  Colors.black87,
+                                  20,
+                                  FontWeight.bold,
+                                ),
                               ])
                         : Text("NULL"),
           )),

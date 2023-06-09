@@ -1,10 +1,12 @@
 import 'package:capstone1/BasicObject.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 
 import '../user/UserInfo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
@@ -13,6 +15,8 @@ class SignupPage extends StatelessWidget {
   var id = TextEditingController(); // id 입력 저장
   var password = TextEditingController(); // pw 입력 저장
   var nickname = TextEditingController();
+
+  // final _authentication = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -54,40 +58,28 @@ class SignupPage extends StatelessWidget {
 
                                 // padding:
                                 //     const EdgeInsets.only(top: 8, bottom: 20),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: width * 0.55,
-                                      child: TextFormField(
-                                        controller: id,
-                                        onSaved: (val) {
-                                          // user.setId(val!);
-                                        },
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "id는 필수입니다.";
-                                          }
-                                          if (!(value!.length > 3 &&
-                                              value!.length < 9)) {
-                                            return "id는 4자 이상 9자 미만으로 입력";
-                                          }
-                                        },
-                                        decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          hintText: "아이디를 입력하세요",
-                                          // enabledBorder: OutlineInputBorder(
-                                          //     borderRadius: BorderRadius.all(Radius.circular(10)))
-                                          // prefix: Padding(padding: EdgeInsets.symmetric(horizontal: 8),)
-                                        ),
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                        onPressed: () {}, child: Text("중복확인"))
-                                  ],
+                                child: TextFormField(
+                                  controller: id,
+                                  onSaved: (val) {
+                                    // user.setId(val!);
+                                  },
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "id는 필수입니다.";
+                                    }
+                                    if (!(value!.length > 3 &&
+                                        value!.length < 9)) {
+                                      return "id는 4자 이상 9자 미만으로 입력";
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    hintText: "아이디를 입력하세요",
+                                    // enabledBorder: OutlineInputBorder(
+                                    //     borderRadius: BorderRadius.all(Radius.circular(10)))
+                                    // prefix: Padding(padding: EdgeInsets.symmetric(horizontal: 8),)
+                                  ),
                                 ),
                               ),
                             ),
@@ -174,9 +166,6 @@ class SignupPage extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        // isLoading = true;
-                        //성공
-                        // formKey.currentState!.save();
                         print(1);
                         try {
                           var dio = Dio();
@@ -187,20 +176,20 @@ class SignupPage extends StatelessWidget {
                           };
                           print(param);
                           var response = await dio.post(
-                              'http://118.34.54.132:8080/signup',
+                              'http://118.34.54.132:8081/user/save',
                               data: param);
 
                           if (response.statusCode == 200) {
                             print(response.data);
                             Get.back();
-                          }
+                          } else if (response.statusCode == 400) {}
                         } catch (e) {
+                          Fluttertoast.showToast(
+                              msg: '중복된 아이디입니다..', //$curlacation',
+                              gravity: ToastGravity.CENTER,
+                              toastLength: Toast.LENGTH_SHORT);
                           print(e);
                         }
-
-                        // print(user.getId() +
-                        //     user.getPassword() +
-                        //     user.getNickname());
                       } else {}
                       //
                     },
