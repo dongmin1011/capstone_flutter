@@ -2,7 +2,7 @@ import 'package:capstone1/BasicObject.dart';
 import 'package:capstone1/MyInfoPage/MyInfoWidget.dart';
 import 'package:capstone1/TakePicturePage/takepic.dart';
 import 'package:capstone1/Token/token.dart';
-import 'package:capstone1/community/communityPage.dart';
+import 'package:capstone1/community/StoreListPage.dart';
 import 'package:capstone1/first_page/first_page.dart';
 import 'package:capstone1/loginPage/loginPage.dart';
 import 'package:capstone1/loginPage/signUpPage.dart';
@@ -31,7 +31,7 @@ class SideView extends StatelessWidget {
                           }
                         }),
                     decoration: BoxDecoration(
-                        color: Colors.red[200],
+                        color: Colors.blueAccent[100],
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(40),
                             bottomRight: Radius.circular(40)))),
@@ -89,9 +89,12 @@ class SideView extends StatelessWidget {
                   ),
                   title: TextObject("커뮤니티", Colors.black, 15, FontWeight.w300,
                       center: false),
-                  onTap: () {
+                  onTap: () async {
                     Get.back();
-                    Get.to(() => CommunityPage(response: "test"));
+                    // Get.to(() => StoreListPage(response: "test"));
+                    // var response = await test();
+                    Get.to(() => StoreListPage());
+
                     print('community is clicked');
                   },
                   trailing: Icon(Icons.add),
@@ -106,6 +109,23 @@ class SideView extends StatelessWidget {
                     print('Q&A is clicked');
                   },
                   trailing: Icon(Icons.add),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, top: 20, bottom: 10),
+                  child: Text(
+                    "앞으로 추가할 내용",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: Colors.black54),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Divider(
+                    color: Colors.black54,
+                    height: 1,
+                  ),
                 ),
               ]),
             ));
@@ -184,9 +204,18 @@ Widget loginComplete(BuildContext context, data) {
                 width: 100,
                 height: 35,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    color: Colors.grey[300]),
-                child: TextObject("내정보", Colors.black, 15, FontWeight.w300)),
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.grey.withOpacity(0.7),
+                  //     spreadRadius: 2,
+                  //     blurRadius: 5,
+                  //     offset: Offset(0, 3), // changes position of shadow
+                  //   ),
+                  // ],
+                  color: Colors.deepOrange[50],
+                ),
+                child: TextObject("내정보", Colors.black, 15, FontWeight.bold)),
           ),
           GestureDetector(
             onTap: (() {
@@ -199,54 +228,20 @@ Widget loginComplete(BuildContext context, data) {
                 decoration: BoxDecoration(
                     // boxShadow: [
                     //   BoxShadow(
-                    //     spreadRadius: 1,
-                    //     blurRadius: 3,
-                    //     offset: Offset(0, 3),
-                    //   )
+                    //     color: Colors.grey.withOpacity(0.7),
+                    //     spreadRadius: 2,
+                    //     blurRadius: 5,
+                    //     offset: Offset(0, 3), // changes position of shadow
+                    //   ),
                     // ],
                     borderRadius: BorderRadius.all(Radius.circular(30)),
-                    color: Colors.grey[300]),
-                child: TextObject("로그아웃", Colors.black, 15, FontWeight.w300)),
+                    color: Colors.green[50]),
+                child: TextObject("로그아웃", Colors.black, 15, FontWeight.bold)),
           ),
         ],
       )
     ]),
   );
-  // return UserAccountsDrawerHeader(
-  //   currentAccountPicture: GestureDetector(
-  //     onTap: () {
-  //       _myController.onLoginDelete();
-  //     },
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(8.0),
-  //       child: CircleAvatar(
-  //         backgroundImage:
-  //             AssetImage('assets/user.png'), //이미지 삽입할때 pubspec에셋확인하기
-  //         backgroundColor: Colors.white,
-  //       ),
-  //     ),
-  //   ),
-  //   accountName: Row(
-  //     children: [
-  //       TextObject("아이디  ", Colors.black, 20, FontWeight.bold),
-  //       TextObject(data['loginId'], Colors.black, 20, FontWeight.w300),
-  //     ],
-  //   ),
-  //   accountEmail: Row(
-  //     children: [
-  //       TextObject("닉네임  ", Colors.black, 20, FontWeight.bold),
-  //       TextObject(data['name'], Colors.black, 20, FontWeight.w300),
-  //     ],
-  //   ),
-  //   onDetailsPressed: () {
-  //     print('arrow is clicked');
-  //   },
-  //   decoration: BoxDecoration(
-  //       color: Colors.red[200],
-  //       borderRadius: BorderRadius.only(
-  //           bottomLeft: Radius.circular(40.0),
-  //           bottomRight: Radius.circular(40.0))),
-  // );
 }
 
 Widget notLogin(BuildContext context) {
@@ -310,7 +305,7 @@ Widget notLogin(BuildContext context) {
               height: 35,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
-                  color: Colors.grey[300]),
+                  color: Colors.deepOrange[50]),
               child: TextObject("회원가입", Colors.black, 15, FontWeight.w300)),
         ),
         GestureDetector(
@@ -330,54 +325,10 @@ Widget notLogin(BuildContext context) {
                   //   )
                   // ],
                   borderRadius: BorderRadius.all(Radius.circular(30)),
-                  color: Colors.grey[300]),
+                  color: Colors.green[50]),
               child: TextObject("로그인", Colors.black, 15, FontWeight.w300)),
         ),
       ],
     )
   ]));
 }
-      
-  // return UserAccountsDrawerHeader(
-  //   currentAccountPicture: GestureDetector(
-  //     onTap: () {
-  //       openSimplePage(context, loginPage());
-  //     },
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(8.0),
-  //       child: CircleAvatar(
-  //         backgroundImage:
-  //             AssetImage('assets/user.png'), //이미지 삽입할때 pubspec에셋확인하기
-  //         backgroundColor: Colors.white,
-  //       ),
-  //       // child: Container(
-  //       //   decoration:
-  //       //   BoxDecoration(border: ),
-  //       // ),
-  //     ),
-  //   ),
-  //   accountName: Text("이름"),
-  //   accountEmail: Text('이메일'),
-  //   onDetailsPressed: () {
-  //     print('arrow is clicked');
-  //   },
-  //   decoration: BoxDecoration(
-  //       color: Colors.red[200],
-  //       borderRadius: BorderRadius.only(
-  //           bottomLeft: Radius.circular(40.0),
-  //           bottomRight: Radius.circular(40.0))),
-  // );
-
-
-// class test extends UserAccountsDrawerHeader{
-//   test({required super.accountName, required super.accountEmail});
-
-// }
-// class test extends State<UserAccountsDrawerHeader>{
-//   @override
-//   Widget build(BuildContext context) {
-//     // TODO: implement build
-
-//   }
-
-// }

@@ -5,6 +5,7 @@ import 'package:capstone1/BasicObject.dart';
 import 'package:capstone1/StoreInfo.dart';
 import 'package:capstone1/Token/token.dart';
 import 'package:capstone1/first_page/MainPage.dart';
+import 'package:capstone1/ip.dart';
 import 'package:capstone1/loginPage/loginPage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -180,7 +181,7 @@ class _CommunityPageState extends State<CommunityPage> {
                                                   } else {
                                                     return Padding(
                                                       padding: const EdgeInsets
-                                                              .symmetric(
+                                                          .symmetric(
                                                           horizontal: 10),
                                                       child: Column(
                                                         crossAxisAlignment:
@@ -213,7 +214,7 @@ class _CommunityPageState extends State<CommunityPage> {
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsets
-                                                                        .only(
+                                                                    .only(
                                                                     left: 8.0,
                                                                     top: 8),
                                                             child: TextObject(
@@ -313,10 +314,10 @@ class _CommunityPageState extends State<CommunityPage> {
                                           String jsonString =
                                               json.encode(childData);
                                           var upload = new Dio();
-
+                                          print(2);
                                           try {
                                             var response = await upload.post(
-                                              "http://118.34.54.132:8081/database/save/community/comment",
+                                              "http://$ip/database/save/community/comment",
                                               data: jsonString,
                                               options: Options(
                                                 headers: {
@@ -325,7 +326,7 @@ class _CommunityPageState extends State<CommunityPage> {
                                                 },
                                               ),
                                             );
-                                            // print(2);
+
                                             if (response.statusCode == 200) {
                                               review = '';
                                               controller.getReview(id);
@@ -388,7 +389,7 @@ Future<Map<String, dynamic>?> getPost(int id) async {
     Map<String, dynamic> data = {"id": id};
     String url;
 
-    url = "http://118.34.54.132:8081/database/review/community/comments";
+    url = "http://$ip/database/review/community/comments";
     // return null;
 
     var response = await upload.get(url, queryParameters: data

@@ -22,6 +22,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lottie/lottie.dart';
 import '../LoadingWidget.dart';
+import '../first_page/MainPage.dart';
+import '../ip.dart';
 // import 'package:flutter/animation.dart';
 
 class takepic extends StatefulWidget {
@@ -84,7 +86,8 @@ class _GetImageState extends State<takepic>
       drawer: SideView(),
       body: Container(
         child: Stack(children: [
-          // backgroundImage(width, height),
+          backgroundImage(
+              width, height, "assets/background/camerabackground.jpg"),
 
           Center(
             child: Column(
@@ -247,7 +250,6 @@ class _GetImageState extends State<takepic>
 
                         // print(formData.files);
                         // postUserProfileImage(formData);
-
                       }
                       // Center(child: CircularProgressIndicator());
                       // IsLoadingController.to.isLoading = true; // 돌돌이 소환!
@@ -413,7 +415,7 @@ class _GetImageState extends State<takepic>
       // dio.options.headers = {'token': token};
       // final Uri url = Uri.parse("http://118.34.54.132:8081/upload/picture");
       var response = await upload.post(
-        "http://118.34.54.132:8081/upload/picture",
+        "http://$ip/upload/picture",
         data: formData,
         // options: dio.Options(headers: {'Connection': 'keep-alive'}),
       );
@@ -436,6 +438,8 @@ class _GetImageState extends State<takepic>
               gravity: ToastGravity.CENTER,
               toastLength: Toast.LENGTH_SHORT);
         } else {
+          // Get.delete<ListPageController>();
+
           Get.to(() => StoreInfo(image: response.data),
               transition: Transition.upToDown);
         }

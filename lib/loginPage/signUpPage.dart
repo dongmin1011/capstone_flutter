@@ -1,4 +1,5 @@
 import 'package:capstone1/BasicObject.dart';
+import 'package:capstone1/ip.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -175,8 +176,7 @@ class SignupPage extends StatelessWidget {
                             'name': nickname.text
                           };
                           print(param);
-                          var response = await dio.post(
-                              'http://118.34.54.132:8081/user/save',
+                          var response = await dio.post('http://$ip/user/save',
                               data: param);
 
                           if (response.statusCode == 200) {

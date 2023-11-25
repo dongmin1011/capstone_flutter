@@ -5,7 +5,7 @@ import 'package:capstone1/MyInfoPage/MyInfoWidget.dart';
 import 'package:capstone1/StoreInfo.dart';
 import 'package:capstone1/TakePicturePage/takepic.dart';
 import 'package:capstone1/Token/token.dart';
-import 'package:capstone1/community/communityPage.dart';
+import 'package:capstone1/community/StoreListPage.dart';
 import 'package:capstone1/loginPage/loginPage.dart';
 import 'package:capstone1/loginPage/social_login.dart';
 import 'package:capstone1/user/UserInfo.dart';
@@ -126,7 +126,8 @@ class _MainPageState extends State<MainPage> {
         height: widget.height,
         child: Stack(
           children: [
-            backgroundImage(widget.width, widget.height),
+            backgroundImage(widget.width, widget.height,
+                "assets/background/camerabackground.jpg"),
             SingleChildScrollView(
               physics: BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
@@ -153,6 +154,7 @@ class _MainPageState extends State<MainPage> {
                           }
                         }),
                     // userNotLogin(context),
+                    // userNotLogin(context),
                     SizedBox(
                       height: 30,
                     ),
@@ -168,7 +170,12 @@ class _MainPageState extends State<MainPage> {
                         children: [
                           InkWell(
                               onTap: (() async {
-                                Get.to(() => CommunityPage(response: "hi"));
+                                // Get.delete<ListPageController>();
+                                // Get.delete<StorePageController>();
+                                // var response = await test();
+                                // print(response.toString());
+                                Get.to(() => StoreListPage());
+
                                 // print("hi");
                                 // var dio = new Dio();
                                 // try {
@@ -235,9 +242,12 @@ class _MainPageState extends State<MainPage> {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 20),
                             child: InkWell(
-                                onTap: () => Get.to(() => takepic()),
-                                // Navigator.push(context,
-                                //     MaterialPageRoute(builder: (context) => takepic())),
+                                onTap: () {
+                                  // Get.delete<ListPageController>();
+                                  // Get.delete<StorePageController>();
+
+                                  Get.to(() => takepic());
+                                },
                                 child: Hero(
                                   tag: "tagHero",
                                   child: Container(
@@ -369,27 +379,40 @@ class _MainPageState extends State<MainPage> {
                             ])),
                   ),
                   Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          openSimplePage(context, UserInfoPage());
-                        },
-                        child: Container(
-                            alignment: Alignment.center,
-                            width: 40,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                              // border:
-                              //     Border.all(color: Colors.black)
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextObject(
-                                  "내정보", Colors.black, 17, FontWeight.bold),
-                            )),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            openSimplePage(context, UserInfoPage());
+                          },
+                          child: Container(
+                              alignment: Alignment.center,
+                              width: 40,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Colors.deepOrange[50],
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: Offset(
+                                        1, 3), // changes position of shadow
+                                  ),
+                                ],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30)),
+                                // border:
+                                //     Border.all(color: Colors.black)
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextObject(
+                                    "내정보", Colors.black, 17, FontWeight.bold),
+                              )),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
@@ -402,16 +425,26 @@ class _MainPageState extends State<MainPage> {
                             width: 40,
                             height: 100,
                             decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
+                              color: Colors.green[50],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.7),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(
+                                      1, 3), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
                               // border:
                               //     Border.all(color: Colors.black)
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(7.0),
                               child: TextObject(
-                                  "로그아웃", Colors.black, 17, FontWeight.bold),
+                                  "로그아웃", Colors.black, 15, FontWeight.bold),
                             ),
                           ),
                         ),
@@ -488,7 +521,7 @@ class _MainPageState extends State<MainPage> {
                     width: 40,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color: Colors.green[50],
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                       // border:
                       //     Border.all(color: Colors.black)
@@ -548,24 +581,9 @@ class _MainPageInfoState extends State<MainPageInfo> {
   late PageController _controller;
   static dynamic currentPageValue = 0.0;
   late List pageViewItem;
-  // late int _currentIndex;
-
-  // void onPageChanged(int index) {
-  //   setState(() {
-  //     _currentIndex = index;
-  //     // _controller =
-  //     //     PageController(initialPage: _currentIndex, viewportFraction: 0.8);
-  //   });
-  // }
-  // @override
-  // bool get wantKeepAlive => true;
-  // PageController getPageControll() {
-  //   return _controller;
-  // }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // _currentIndex = 0;
     _controller = PageController(initialPage: -1, viewportFraction: 0.8);
@@ -576,28 +594,8 @@ class _MainPageInfoState extends State<MainPageInfo> {
     });
   }
 
-// Widget page(var pageno, Color color) {
-//   return Container(
-//     width: double.infinity,
-//     height: double.infinity,
-//     color: color,
-//     child: Row(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       crossAxisAlignment: CrossAxisAlignment.center,
-//       children: [
-//         Icon(
-//           Icons.pages,
-//           color: Colors.white,
-//         ),
-//         Text("${pageno}, Swipe Right or left"),
-//         Icon(Icons.arrow_right, color: Colors.white),
-//       ],
-//     ),
-//   );
-// }
   Widget pageView() {
     return PageView.builder(
-        // onPageChanged: onPageChanged,
         itemCount: pageViewItem.length,
         scrollDirection: Axis.horizontal,
         controller: _controller,

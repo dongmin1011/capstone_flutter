@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:capstone1/BasicObject.dart';
 import 'package:capstone1/StoreInfo.dart';
+import 'package:capstone1/community/StoreListToInfo.dart';
 import 'package:capstone1/ip.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
-import 'first_page/MainPage.dart';
+// import 'first_page/MainPage.dart';
 
 class WritingPage extends StatefulWidget {
   const WritingPage({super.key, required this.user, required this.store});
@@ -30,7 +31,7 @@ class _WritingPageState extends State<WritingPage> {
 
     String _title = '';
     String post = '';
-    return GetBuilder<StorePageController>(
+    return GetBuilder<StoreListInfoController>(
       builder: (controller2) => Center(
           child: Container(
               height: height * 0.75,

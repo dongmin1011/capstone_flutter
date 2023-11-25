@@ -6,6 +6,7 @@ import 'package:capstone1/BasicObject.dart';
 import 'package:capstone1/TakePicturePage/takepic.dart';
 import 'package:capstone1/Token/token.dart';
 import 'package:capstone1/first_page/MainPage.dart';
+import 'package:capstone1/ip.dart';
 import 'package:capstone1/loginPage/Model.dart';
 import 'package:capstone1/loginPage/signUpPage.dart';
 import 'package:capstone1/loginPage/social_login.dart';
@@ -202,7 +203,7 @@ class _loginPageState extends State<loginPage> {
                                         'password': password.text
                                       });
                                       var response = await dio.post(
-                                        'http://118.34.54.132:8081/user/login',
+                                        'http://$ip/user/login',
                                         data: param,
                                         options: Options(
                                           headers: {
@@ -298,34 +299,6 @@ class _loginPageState extends State<loginPage> {
                                       });
                                     });
                                   }
-                                  // print("err");
-                                  // Future.delayed(Duration(seconds: 1), () {
-                                  //       if (formKey.currentState!.validate()) {
-                                  //         //성공
-                                  //         check.fire();
-                                  //         Future.delayed(Duration(seconds: 2),
-                                  //             () {
-                                  //           setState(() {
-                                  //             isLoading = false;
-                                  //             // isShowConfetti = false;
-                                  //           });
-
-                                  //           confetti.fire();
-                                  //           Future.delayed(Duration(seconds: 1),
-                                  //               () {
-                                  //             Get.back();
-                                  //           });
-                                  //         });
-                                  //       } else {
-                                  //         error.fire();
-                                  //         Future.delayed(Duration(seconds: 2),
-                                  //             () {
-                                  //           setState(() {
-                                  //             isLoading = false;
-                                  //           });
-                                  //         });
-                                  //       }
-                                  //     });
                                 },
                                 child: Container(
                                     alignment: Alignment.center,
@@ -365,37 +338,37 @@ class _loginPageState extends State<loginPage> {
                             ],
                           ),
                         ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: GestureDetector(
-                              onTap: () async {
-                                print("카카오 로그인");
-                                await viewModel.login();
-                                setState(() {
-                                  // Get.back();
-                                  if (viewModel.isLogined) {
-                                    Get.back();
-                                    // Get.offAll(FirstPage());
-                                    // print(viewModel.isLogined);
-                                    // Future.delayed()
+                        // Center(
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.symmetric(vertical: 10),
+                        //     child: GestureDetector(
+                        //       onTap: () async {
+                        //         print("카카오 로그인");
+                        //         await viewModel.login();
+                        //         setState(() {
+                        //           // Get.back();
+                        //           if (viewModel.isLogined) {
+                        //             Get.back();
+                        //             // Get.offAll(FirstPage());
+                        //             // print(viewModel.isLogined);
+                        //             // Future.delayed()
 
-                                    setState(() {
-                                      // Get.to(FirstPage());
-                                      // Get.offAll(FirstPage());
-                                      // print("끼요옹오오오오옷" +
-                                      //     MyApp.storage
-                                      //         .read(key: 'token')
-                                      //         .toString());
-                                    });
-                                  }
-                                });
-                              },
-                              child:
-                                  Image.asset("assets/splash/kakao_login.png"),
-                            ),
-                          ),
-                        ),
+                        //             setState(() {
+                        //               // Get.to(FirstPage());
+                        //               // Get.offAll(FirstPage());
+                        //               // print("끼요옹오오오오옷" +
+                        //               //     MyApp.storage
+                        //               //         .read(key: 'token')
+                        //               //         .toString());
+                        //             });
+                        //           }
+                        //         });
+                        //       },
+                        //       child:
+                        //           Image.asset("assets/splash/kakao_login.png"),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     )),
               ]),

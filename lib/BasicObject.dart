@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:capstone1/TakePicturePage/takepic.dart';
-import 'package:capstone1/community/communityPage.dart';
+import 'package:capstone1/community/StoreListPage.dart';
 import 'package:capstone1/first_page/first_page.dart';
 import 'package:capstone1/first_page/MainPage.dart';
 
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Text TextObject(String msg, Color textColor, double fontsize, FontWeight fw,
-    {bool center = true}) {
+    {bool center = true, int maxLine = 100}) {
   return Text(
     msg,
     textAlign: (center == true) ? TextAlign.center : null,
@@ -21,6 +21,8 @@ Text TextObject(String msg, Color textColor, double fontsize, FontWeight fw,
       fontFamily: 'Tmoney',
       fontWeight: fw,
     ),
+    maxLines: maxLine,
+    // overflow: TextOverflow.ellipsis,
   );
 }
 
@@ -38,16 +40,20 @@ AppBar appbarObject(String title) {
   );
 }
 
-Widget backgroundImage(double width, double height) {
+Widget backgroundImage(double width, double height, url) {
   return Container(
     width: width,
     height: height * 0.3,
     decoration: BoxDecoration(
-        color: Colors.greenAccent,
+        // color: Colors.blue.withOpacity(0.5),
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50)),
         image: DecorationImage(
-            image: AssetImage("assets/background/camerabackground.jpg"),
+            image: AssetImage(url),
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.3), // 투명도 조절
+              BlendMode.dstATop, // 블렌드 모드 설정
+            ),
             fit: BoxFit.cover)),
   );
 }

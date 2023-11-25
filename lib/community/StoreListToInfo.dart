@@ -1,51 +1,47 @@
 import 'dart:convert';
 
 import 'package:capstone1/BasicObject.dart';
+import 'package:capstone1/ETReviewPage.dart';
 import 'package:capstone1/MenuPage.dart';
 import 'package:capstone1/Token/token.dart';
-import 'package:capstone1/WritingPage.dart';
+// import 'package:capstone1/WritingPage.dart';
+import 'package:capstone1/community/StoreListPage.dart';
+import 'package:capstone1/community/WritingPage.dart';
 import 'package:capstone1/communityPage.dart';
+import 'package:capstone1/first_page/first_page.dart';
 import 'package:capstone1/ip.dart';
 import 'package:capstone1/loginPage/loginPage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path/path.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'ETReviewPage.dart';
-import 'LoadingWidget.dart';
 import '../first_page/MainPage.dart';
-import 'community/StoreListPage.dart';
-import 'first_page/first_page.dart';
 
-class StoreInfo extends StatefulWidget {
-  const StoreInfo({Key? key, required this.image}) : super(key: key);
+class StoreListInfo extends StatefulWidget {
+  const StoreListInfo({Key? key, required this.image}) : super(key: key);
 
   // final dynamic sendData;
   final Map<String, dynamic> image;
 
   @override
-  State<StoreInfo> createState() => _StoreInfoState();
+  State<StoreListInfo> createState() => _StoreInfoState();
 }
 
-class StorePageController extends GetxController {
+class StoreListInfoController extends GetxController {
   void StoreReview(name, engine) {
     getReview(name, engine);
     update();
   }
-
-  void updateUserData(id) {
-    updateToken(id);
-    update();
-  }
 }
 
-class _StoreInfoState extends State<StoreInfo> {
+class _StoreInfoState extends State<StoreListInfo> {
   // @override
   // void initState() {
   //   postUserProfileImage(formData);
@@ -71,7 +67,6 @@ class _StoreInfoState extends State<StoreInfo> {
   }
 
   RxBool isLoggedIn = false.obs;
-  final StorePageController _myController = Get.put(StorePageController());
 
   // late PageController _controller;
   // dynamic currentPageValue = 0.0;
@@ -131,7 +126,9 @@ class _StoreInfoState extends State<StoreInfo> {
   // }
   // final storeList;
   // String _storeValue;
-
+  // final ListPageController _myController = Get.put(ListPageController());
+  final StoreListInfoController _myController =
+      Get.put(StoreListInfoController());
   @override
   Widget build(BuildContext context) {
     // final storeList = widget.image['names'];
@@ -142,249 +139,221 @@ class _StoreInfoState extends State<StoreInfo> {
     double height = MediaQuery.of(context).size.height;
 
     return GetBuilder<MainPageController>(
-      builder: (controller1) => GetBuilder<StorePageController>(
-        builder: (controller2) => Scaffold(
-            extendBodyBehindAppBar: true,
-            // appBar: appbarObject(""),
-            // backgroundColor: Colors.grey[200],
-            body: Container(
-              color: Colors.grey[200],
-              child: CustomScrollView(
-                physics: BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                slivers: [
-                  SliverAppBar(
-                    // title: IconButton(onPressed: () {}, icon: Icon(Icons.clear)),
+      builder: (controller1) => GetBuilder<ListPageController>(
+        builder: (controller2) => GetBuilder<StoreListInfoController>(
+          builder: (controller3) => Scaffold(
+              extendBodyBehindAppBar: true,
+              // appBar: appbarObject(""),
+              // backgroundColor: Colors.grey[200],
+              body: Container(
+                color: Colors.grey[200],
+                child: CustomScrollView(
+                  physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  slivers: [
+                    SliverAppBar(
+                      // title: IconButton(onPressed: () {}, icon: Icon(Icons.clear)),
 
-                    toolbarHeight: 80,
-                    title: Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: DropdownButton<String>(
-                          dropdownColor: Colors.white,
-                          value: _storeValue,
-                          items: storeList.map(
-                            (value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: TextObject(
-                                    value, Colors.black, 20, FontWeight.bold),
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (String? value) {
-                            setState(() {
-                              print(value);
-                              _storeValue = value!;
-                              // print(_storeValue);
-                            });
-                          },
-                        ),
+                      toolbarHeight: 80,
+                      title: Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white54,
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextObject(_storeValue, Colors.black, 20,
+                                  FontWeight.bold),
+                            )),
                       ),
-                    ),
-                    leading: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.white54,
-                          child: IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              Get.back();
-                            },
-                          )),
-                    ),
-                    // foregroundColor: Colors.black,
-                    elevation: 0,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30),
+                      leading: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                            foregroundColor: Colors.black,
+                            backgroundColor: Colors.white54,
+                            child: IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () {
+                                Get.back();
+                              },
+                            )),
                       ),
-                    ),
-                    pinned: true,
-                    backgroundColor: Colors.blueAccent,
-                    // c: Colors.grey[200],
-                    expandedHeight: 500,
-                    flexibleSpace: FlexibleSpaceBar(
-                        background: Container(
-                      decoration: BoxDecoration(
-                        // color: Colors.black,
+                      // foregroundColor: Colors.black,
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(30),
                           bottomRight: Radius.circular(30),
                         ),
-
-                        image: DecorationImage(
-                          image:
-                              MemoryImage(base64Decode(widget.image['image'])),
-                          fit: BoxFit.cover,
-                        ),
                       ),
-                    )),
-                    bottom: PreferredSize(
-                      preferredSize: Size.fromHeight(30),
-                      child: Container(
-                        color: Colors.white70,
-                        width: double.maxFinite,
-                        // decoration: BoxDecoration(
-                        //     color: Colors.white54,
-                        //     borderRadius: BorderRadius.only(
-                        //         bottomLeft: Radius.circular(30),
-                        //         bottomRight: Radius.circular(30))),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                flex: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 10.0),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: IconButton(
-                                      icon: Icon(Icons.home_outlined),
-                                      onPressed: () {
-                                        Get.offAll(() => FirstPage());
-                                      },
-                                    ),
-                                  ),
-                                )),
-                            Expanded(
-                              flex: 1,
-                              child: TextObject(
-                                  "인식된 사진", Colors.black, 15, FontWeight.bold),
+                      pinned: true,
+                      backgroundColor: Colors.blueAccent,
+                      // c: Colors.grey[200],
+                      expandedHeight: 500,
+                      flexibleSpace: FlexibleSpaceBar(
+                          background: Container(
+                        decoration: BoxDecoration(
+                          // color: Colors.black,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
+                          ),
+                          color: Colors.black,
+
+                          image: DecorationImage(
+                            image: NetworkImage(widget.image['image']),
+                            fit: BoxFit.cover,
+                            colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(0.6), // 투명도 조절
+                              BlendMode.dstATop, // 블렌드 모드 설정
                             ),
-                            // Flexible(child: Container()),
-                            Expanded(
-                                flex: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: FutureBuilder(
-                                      future: getToken(),
-                                      builder: (context, snapshot) {
-                                        var isLoggedIn = snapshot.data != null;
-                                        // print(snapshot);
-                                        if (isLoggedIn) {
-                                          // print(alreadySaved);
-                                          // print(snapshot.data!['storeDTOList']);
-
-                                          // FutureBuilder(
-                                          //   future: updateToken(
-                                          //       snapshot.data!['id']),
-                                          //   builder: ((context, snapshot) {
-                                          //     print('kkk' +
-                                          //         snapshot.data.toString());
-                                          //     var alreadySaved = snapshot
-                                          //         .data!['storeDTOList']
-                                          //         .contains(_storeValue);
-                                          //     print('already' +
-                                          //         alreadySaved.toString());
-
-                                          //     return SizedBox();
-                                          //   }),
-                                          // );
-
-                                          var alreadySaved = snapshot
-                                              .data!['storeDTOList']
-                                              .contains(_storeValue);
-                                          // print(snapshot.data);
-                                          // print(alreadySaved);
-                                          return IconButton(
-                                              icon: alreadySaved
-                                                  ? Icon(Icons.favorite)
-                                                  : Icon(Icons.favorite_border),
-                                              color: alreadySaved
-                                                  ? Colors.red
-                                                  : null,
-                                              onPressed: (() async {
-                                                // Get.back();
-                                                var upload = new Dio();
-
-                                                if (alreadySaved) {
-                                                  // setState(() {
-                                                  //   alreadySaved = false;
-                                                  // });
-                                                  try {
-                                                    var response =
-                                                        await upload.post(
-                                                      "http://$ip/user/deleteStore",
-                                                      data: {
-                                                        'id': snapshot
-                                                            .data!['id'],
-                                                        'name': _storeValue
-                                                      },
-                                                    );
-                                                    // print(2);
-                                                    if (response.statusCode ==
-                                                        200) {
-                                                      controller2.update();
-                                                      // controller3.update();
-                                                    }
-                                                  } catch (e) {
-                                                    print(e);
-                                                  }
-                                                } else {
-                                                  try {
-                                                    var response =
-                                                        await upload.post(
-                                                      "http://$ip/user/favoriteStore",
-                                                      data: {
-                                                        'id': snapshot
-                                                            .data!['id'],
-                                                        'name': _storeValue
-                                                      },
-                                                    );
-                                                    // print(2);
-                                                    if (response.statusCode ==
-                                                        200) {
-                                                      controller2.update();
-                                                      // controller3.update();
-                                                    }
-                                                  } catch (e) {
-                                                    print(e);
-                                                  }
-                                                }
-                                              }));
-                                        } else {
-                                          return IconButton(
-                                            icon: Icon(Icons.favorite_border),
-                                            onPressed: () {
-                                              openSimplePage(
-                                                  context, loginPage());
-                                            },
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ))
-                          ],
+                          ),
                         ),
-                        // padding: EdgeInsets.only(top: 5, bottom: 10),
-                        // decoration: BoxDecoration(
-                        //     //     borderRadius: BorderRadius.only(
-                        //     //         bottomLeft: Radius.circular(50),
-                        //     // bottomRight: Radius.circular(50))
-                        //     ),
+                      )),
+                      bottom: PreferredSize(
+                        preferredSize: Size.fromHeight(30),
+                        child: Container(
+                          color: Colors.white70,
+                          width: double.maxFinite,
+                          // decoration: BoxDecoration(
+                          //     color: Colors.white54,
+                          //     borderRadius: BorderRadius.only(
+                          //         bottomLeft: Radius.circular(30),
+                          //         bottomRight: Radius.circular(30))),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 10.0),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: IconButton(
+                                        icon: Icon(Icons.home_outlined),
+                                        onPressed: () {
+                                          Get.offAll(() => FirstPage());
+                                        },
+                                      ),
+                                    ),
+                                  )),
+                              Expanded(
+                                flex: 1,
+                                child: TextObject("인식된 사진", Colors.black, 15,
+                                    FontWeight.bold),
+                              ),
+                              Expanded(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: FutureBuilder(
+                                        future: getToken(),
+                                        builder: (context, snapshot) {
+                                          var isLoggedIn =
+                                              snapshot.data != null;
+                                          // print(snapshot);
+                                          if (isLoggedIn) {
+                                            var alreadySaved = snapshot
+                                                .data!['storeDTOList']
+                                                .contains(_storeValue);
+                                            // print(snapshot.data);
+                                            // print(alreadySaved);
+                                            return IconButton(
+                                                icon: alreadySaved
+                                                    ? Icon(Icons.favorite)
+                                                    : Icon(
+                                                        Icons.favorite_border),
+                                                color: alreadySaved
+                                                    ? Colors.red
+                                                    : null,
+                                                onPressed: (() async {
+                                                  // Get.back();
+                                                  var upload = new Dio();
+
+                                                  if (alreadySaved) {
+                                                    // setState(() {
+                                                    //   alreadySaved = false;
+                                                    // });
+                                                    try {
+                                                      var response =
+                                                          await upload.post(
+                                                        "http://$ip/user/deleteStore",
+                                                        data: {
+                                                          'id': snapshot
+                                                              .data!['id'],
+                                                          'name': _storeValue
+                                                        },
+                                                      );
+                                                      // print(2);
+                                                      if (response.statusCode ==
+                                                          200) {
+                                                        controller2.update();
+                                                        controller3.update();
+                                                      }
+                                                    } catch (e) {
+                                                      print(e);
+                                                    }
+                                                  } else {
+                                                    try {
+                                                      var response =
+                                                          await upload.post(
+                                                        "http://$ip/user/favoriteStore",
+                                                        data: {
+                                                          'id': snapshot
+                                                              .data!['id'],
+                                                          'name': _storeValue
+                                                        },
+                                                      );
+                                                      // print(2);
+                                                      if (response.statusCode ==
+                                                          200) {
+                                                        controller2.update();
+                                                        controller3.update();
+                                                      }
+                                                    } catch (e) {
+                                                      print(e);
+                                                    }
+                                                  }
+                                                }));
+                                          } else {
+                                            return IconButton(
+                                              icon: Icon(Icons.favorite_border),
+                                              onPressed: () {
+                                                openSimplePage(
+                                                    context, loginPage());
+                                              },
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                          // padding: EdgeInsets.only(top: 5, bottom: 10),
+                          // decoration: BoxDecoration(
+                          //     //     borderRadius: BorderRadius.only(
+                          //     //         bottomLeft: Radius.circular(50),
+                          //     // bottomRight: Radius.circular(50))
+                          //     ),
+                        ),
                       ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Center(
-                      child: Column(children: [
-                        StoreTitle(width, height, _storeValue),
-                      ]),
-                    ),
-                  )
-                ],
-              ),
-            )),
+                    SliverToBoxAdapter(
+                      child: Center(
+                        child: Column(children: [
+                          StoreTitle(width, height, _storeValue),
+                        ]),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }
@@ -432,7 +401,7 @@ class _StoreInfoState extends State<StoreInfo> {
                     future: getStoreInfo(_storeValue),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        // print("spanpshot" + snapshot.data.toString());
+                        print("spanpshot" + snapshot.data.toString());
                         return Padding(
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
@@ -446,129 +415,167 @@ class _StoreInfoState extends State<StoreInfo> {
                               ),
                               SizedBox(
                                 height: height * 0.2,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width: width * 0.25,
+                                child: SizedBox(
+                                  // width: width * 0.25,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            width: width * 0.25,
+                                            child: TextObject(
+                                                "위치",
+                                                Colors.black87,
+                                                20,
+                                                FontWeight.bold,
+                                                center: false),
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.6,
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
                                               child: TextObject(
-                                                  "위치",
-                                                  Colors.black87,
-                                                  20,
-                                                  FontWeight.bold,
-                                                  center: false),
-                                            ),
-                                            SizedBox(
-                                              width: width * 0.6,
-                                              child: SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: TextObject(
-                                                    snapshot.data?['address'] !=
-                                                            null
-                                                        ? snapshot
-                                                            .data!["address"]
-                                                        : "",
-                                                    Colors.black87,
-                                                    15,
-                                                    FontWeight.bold,
-                                                    center: false),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width: width * 0.25,
-                                              child: TextObject(
-                                                  "전화번호",
-                                                  Colors.black87,
-                                                  20,
-                                                  FontWeight.bold,
-                                                  center: false),
-                                            ),
-                                            SizedBox(
-                                              width: width * 0.6,
-                                              child: TextObject(
-                                                  snapshot.data?["PH"] != null
-                                                      ? snapshot.data!["PH"]
-                                                      : "",
-                                                  Colors.black87,
-                                                  15,
-                                                  FontWeight.bold,
-                                                  center: false),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width: width * 0.25,
-                                              child: TextObject(
-                                                  "운영시간",
-                                                  Colors.black87,
-                                                  20,
-                                                  FontWeight.bold,
-                                                  center: false),
-                                            ),
-                                            SizedBox(
-                                              width: width * 0.6,
-                                              child: SingleChildScrollView(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                child: TextObject(
-                                                    snapshot.data?[
-                                                                "businessTime"] !=
-                                                            null
-                                                        ? snapshot.data![
-                                                            "businessTime"]
-                                                        : "",
-                                                    Colors.black87,
-                                                    15,
-                                                    FontWeight.bold,
-                                                    center: false),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width: width * 0.25,
-                                              child: TextObject(
-                                                  "별점",
-                                                  Colors.black87,
-                                                  20,
-                                                  FontWeight.bold,
-                                                  center: false),
-                                            ),
-                                            SizedBox(
-                                              width: width * 0.6,
-                                              child: TextObject(
-                                                  snapshot.data!["score"] !=
+                                                  snapshot.data?['address'] !=
                                                           null
-                                                      ? snapshot.data!["score"]
+                                                      ? snapshot
+                                                          .data!["address"]
                                                       : "",
                                                   Colors.black87,
                                                   15,
                                                   FontWeight.bold,
                                                   center: false),
                                             ),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            width: width * 0.25,
+                                            child: TextObject(
+                                                "전화번호",
+                                                Colors.black87,
+                                                20,
+                                                FontWeight.bold,
+                                                center: false),
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.6,
+                                            child: TextObject(
+                                                snapshot.data?["PH"] != null
+                                                    ? snapshot.data!["PH"]
+                                                    : "",
+                                                Colors.black87,
+                                                15,
+                                                FontWeight.bold,
+                                                center: false),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            width: width * 0.25,
+                                            child: TextObject(
+                                                "운영시간",
+                                                Colors.black87,
+                                                20,
+                                                FontWeight.bold,
+                                                center: false),
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.6,
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: TextObject(
+                                                  snapshot.data?[
+                                                              "businessTime"] !=
+                                                          null
+                                                      ? snapshot
+                                                          .data!["businessTime"]
+                                                      : "",
+                                                  Colors.black87,
+                                                  15,
+                                                  FontWeight.bold,
+                                                  center: false),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            width: width * 0.25,
+                                            child: TextObject(
+                                                "별점",
+                                                Colors.black87,
+                                                20,
+                                                FontWeight.bold,
+                                                center: false),
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.6,
+                                            child: TextObject(
+                                                snapshot.data!["score"] != null
+                                                    ? snapshot.data!["score"]
+                                                    : "",
+                                                Colors.black87,
+                                                15,
+                                                FontWeight.bold,
+                                                center: false),
+                                          ),
+                                        ],
+                                      ),
+                                      // SizedBox(
+                                      //   width: width * 0.6,
+                                      //   child: Column(
+                                      //     mainAxisAlignment:
+                                      //         MainAxisAlignment.spaceEvenly,
+                                      //     crossAxisAlignment:
+                                      //         CrossAxisAlignment.start,
+                                      //     children: [
+                                      //       TextObject(
+                                      //           snapshot.data?['address'] != null
+                                      //               ? snapshot.data!["address"]
+                                      //               : "",
+                                      //           Colors.black87,
+                                      //           15,
+                                      //           FontWeight.bold,
+                                      //           center: false),
+                                      //       TextObject(
+                                      //         snapshot.data?["PH"] != null
+                                      //             ? snapshot.data!["PH"]
+                                      //             : "",
+                                      //         Colors.black87,
+                                      //         15,
+                                      //         FontWeight.bold,
+                                      //       ),
+                                      //       TextObject(
+                                      //         snapshot.data?["businessTime"] !=
+                                      //                 null
+                                      //             ? snapshot.data!["businessTime"]
+                                      //             : "",
+                                      //         Colors.black87,
+                                      //         15,
+                                      //         FontWeight.bold,
+                                      //       ),
+                                      //       TextObject(
+                                      //         snapshot.data!["score"] != null
+                                      //             ? snapshot.data!["score"]
+                                      //             : "",
+                                      //         Colors.black87,
+                                      //         15,
+                                      //         FontWeight.bold,
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -686,7 +693,10 @@ class _StoreInfoState extends State<StoreInfo> {
                         return GestureDetector(
                           onTap: () {
                             print("login");
+                            print(snapshot.data);
+                            print(_storeValue);
                             openSimplePage(
+                                //여기 문제 발생
                                 context,
                                 WritingPage(
                                   user: snapshot.data,
@@ -1001,7 +1011,7 @@ class _StoreInfoState extends State<StoreInfo> {
                                               ? "제목없음"
                                               : (reviewList[index])['title'],
                                           Colors.black,
-                                          15,
+                                          13,
                                           FontWeight.bold),
                                     ),
                                     Padding(
@@ -1170,6 +1180,8 @@ Future<Map<String, dynamic>?> getReview(String name, String engine) async {
         response.data['key'] = "에브리타임";
       else if (engine == "커뮤니티") response.data['key'] = "커뮤니티";
       return response.data;
+    } else {
+      return {"e": 'err'};
     }
   } catch (e) {
     print(e);
